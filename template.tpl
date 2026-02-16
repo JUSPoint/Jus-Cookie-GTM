@@ -183,9 +183,9 @@ ___TEMPLATE_PARAMETERS___
         "macrosInSelect": false,
         "selectItems": [
           { "value": "all", "displayValue": "All Regions" },
-          { "value": "eea_tr", "displayValue": "EEA + Türkiye (Recommended)" },
+          { "value": "eea_tr", "displayValue": "EEA + Turkiye (Recommended)" },
           { "value": "eea", "displayValue": "EEA Only (GDPR)" },
-          { "value": "tr", "displayValue": "Türkiye Only (KVKK)" },
+          { "value": "tr", "displayValue": "Turkiye Only (KVKK)" },
           { "value": "custom", "displayValue": "Custom Regions" }
         ],
         "simpleValueType": true,
