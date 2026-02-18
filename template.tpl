@@ -1297,7 +1297,7 @@ ___WEB_PERMISSIONS___
             "listItem": [
               { "type": 1, "string": "ads_data_redaction" },
               { "type": 1, "string": "url_passthrough" },
-              { "type": 1, "string": "developer_id.*" }
+              { "type": 1, "string": "developer_id.dJUS001" }
             ]
           }
         }
@@ -1323,6 +1323,19 @@ ___WEB_PERMISSIONS___
           }
         }
       ]
+    },
+    "clientAnnotations": {
+      "isEditedByUser": true
+    },
+    "isRequired": true
+  },
+  {
+    "instance": {
+      "key": {
+        "publicId": "read_event_metadata",
+        "versionId": "1"
+      },
+      "param": []
     },
     "clientAnnotations": {
       "isEditedByUser": true
