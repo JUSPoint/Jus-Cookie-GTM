@@ -424,14 +424,6 @@ ___TEMPLATE_PARAMETERS___
         "help": "Pushes 'jus_sdk_loaded' event to DataLayer after JUS. SDK loads successfully."
       },
       {
-        "type": "CHECKBOX",
-        "name": "fireBannerShown",
-        "checkboxText": "Fire jus_banner_shown event",
-        "simpleValueType": true,
-        "defaultValue": false,
-        "help": "Pushes 'jus_banner_shown' event to DataLayer when consent banner is displayed."
-      },
-      {
         "type": "LABEL",
         "name": "gtmEventsCustomLabel",
         "displayName": "--- Custom Event Names ---"
@@ -481,21 +473,6 @@ ___TEMPLATE_PARAMETERS___
         "simpleValueType": true,
         "defaultValue": "jus_sdk_loaded",
         "valueHint": "jus_sdk_loaded",
-        "enablingConditions": [
-          {
-            "paramName": "useCustomEventNames",
-            "paramValue": true,
-            "type": "EQUALS"
-          }
-        ]
-      },
-      {
-        "type": "TEXT",
-        "name": "customBannerShownEvent",
-        "displayName": "Banner Shown Event",
-        "simpleValueType": true,
-        "defaultValue": "jus_banner_shown",
-        "valueHint": "jus_banner_shown",
         "enablingConditions": [
           {
             "paramName": "useCustomEventNames",
@@ -719,8 +696,6 @@ const getEventName = function(eventType) {
       return data.customConsentUpdatedEvent || 'jus_consent_updated';
     } else if (eventType === 'sdk_loaded') {
       return data.customSdkLoadedEvent || 'jus_sdk_loaded';
-    } else if (eventType === 'banner_shown') {
-      return data.customBannerShownEvent || 'jus_banner_shown';
     }
   }
   return 'jus_' + eventType;
@@ -766,16 +741,6 @@ const fireSdkLoadedEvent = function() {
     return;
   }
   pushEvent('sdk_loaded', {
-    'jus_script_url': scriptUrl
-  });
-};
-
-// Fire Banner Shown event
-const fireBannerShownEvent = function() {
-  if (!data.fireBannerShown) {
-    return;
-  }
-  pushEvent('banner_shown', {
     'jus_script_url': scriptUrl
   });
 };
@@ -884,24 +849,6 @@ const handleConsentUpdate = function(consentState, consentAction, consentCategor
   fireConsentUpdatedEvent(newConsent, consentAction || 'custom', consentCategories || []);
 };
 
-// Register global callback functions for JUS. SDK
-const registerGlobalCallbacks = function() {
-  // Callback for JUS. SDK consent update
-  setInWindow('__jusCmpUpdateConsent', function(consentState, action, categoriesRaw) {
-    debug('Received consent update from JUS. SDK:', consentState);
-    const categories = categoriesRaw ? categoriesRaw.split(',') : [];
-    handleConsentUpdate(consentState, action, categories);
-  }, true);
-
-  // JUS. SDK banner shown callback
-  setInWindow('__jusCmpBannerShown', function() {
-    debug('Banner shown callback from JUS. SDK');
-    fireBannerShownEvent();
-  }, true);
-
-  debug('Global callbacks registered');
-};
-
 // Listen for consent_update events in DataLayer
 const listenForConsentUpdates = function() {
   // Callback runs on every event
@@ -979,13 +926,10 @@ const main = function() {
   // 5. Fire consent ready event
   fireConsentReadyEvent(initialConsent, consentSource);
 
-  // 6. Register global callbacks (for updates from JUS. SDK)
-  registerGlobalCallbacks();
-
-  // 7. Register DataLayer event listener (for consent_update events)
+  // 6. Register DataLayer event listener (for consent_update events)
   listenForConsentUpdates();
 
-  // 8. Load JUS. SDK (optional)
+  // 7. Load JUS. SDK (optional)
   if (data.injectScript) {
     debug('Loading JUS. SDK from:', scriptUrl);
     injectScript(scriptUrl, onJusSuccess, onJusFailure, 'jusCmpSdk');
@@ -1238,36 +1182,6 @@ ___WEB_PERMISSIONS___
                 ],
                 "mapValue": [
                   { "type": 1, "string": "__jusCmpCookieConfig" },
-                  { "type": 8, "boolean": true },
-                  { "type": 8, "boolean": true },
-                  { "type": 8, "boolean": false }
-                ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  { "type": 1, "string": "key" },
-                  { "type": 1, "string": "read" },
-                  { "type": 1, "string": "write" },
-                  { "type": 1, "string": "execute" }
-                ],
-                "mapValue": [
-                  { "type": 1, "string": "__jusCmpUpdateConsent" },
-                  { "type": 8, "boolean": true },
-                  { "type": 8, "boolean": true },
-                  { "type": 8, "boolean": false }
-                ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  { "type": 1, "string": "key" },
-                  { "type": 1, "string": "read" },
-                  { "type": 1, "string": "write" },
-                  { "type": 1, "string": "execute" }
-                ],
-                "mapValue": [
-                  { "type": 1, "string": "__jusCmpBannerShown" },
                   { "type": 8, "boolean": true },
                   { "type": 8, "boolean": true },
                   { "type": 8, "boolean": false }
