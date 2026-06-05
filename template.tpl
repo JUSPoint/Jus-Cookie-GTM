@@ -503,6 +503,7 @@ const logToConsole = require('logToConsole');
 const getTimestampMillis = require('getTimestampMillis');
 const makeNumber = require('makeNumber');
 const addEventCallback = require('addEventCallback');
+const encodeUriComponent = require('encodeUriComponent');
 
 // DataLayer queue
 const dataLayerPush = createQueue('dataLayer');
@@ -515,7 +516,7 @@ const debug = function(message, obj) {
 };
 
 // Build full script URL from GTM Key
-const scriptUrl = 'https://portal.jus.com.tr/AttachmentFiles/CookieBanner/' + data.scriptUrl + '/banner.js';
+const scriptUrl = 'https://portal.jus.com.tr/AttachmentFiles/CookieBanner/' + encodeUriComponent(data.scriptUrl) + '/banner.js';
 
 // EEA country codes (31 countries)
 const EEA_REGIONS = [
