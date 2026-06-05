@@ -15,5 +15,5 @@
 homepage: "https://jus.com.tr"
 documentation: "https://help.jus.com.tr"
 versions:
-  - sha: ce27a996b3d6d3abd3c32931f50e08e4c08fb451
+  - sha: 9e6dce61f96ca4b7ecda290c43d9cbf1ca6811a5
     changeNotes: Initial release - JUS. Cookie Management (CMP) GTM Template v1.0.0
