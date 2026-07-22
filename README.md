@@ -43,8 +43,7 @@ Google Tag Manager custom template for [JUS.](https://www.jus.com.tr)  Consent M
 
 ## Support
 
-- Documentation (English): [help.juspoint.com](https://help.juspoint.com)
-- Documentation (Türkçe): [help.jus.com.tr](https://help.jus.com.tr)
+- Documentation: [help.jus.com.tr](https://help.jus.com.tr)
 - Email: support@jus.com.tr
 
 ## License
